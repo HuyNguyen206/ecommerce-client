@@ -26,9 +26,22 @@
                                   :key="variationTypeName"
                                   :type="variationTypeName"
                                   :childs="variationTypeChild"
+                                  v-model="form.variation"
                 >
 
                 </ProductVariation>
+                <div class="field has-addons" v-if="form.variation">
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select name="" id="">
+                        <option value="">1</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="control">
+                    <button class="button is-info">Add to cart</button>
+                  </div>
+                </div>
               </form>
             </section>
         </div>
@@ -44,7 +57,11 @@ export default {
   components:{ProductVariation},
   data(){
     return {
-      product: null
+      product: null,
+      form:{
+        variation: null,
+        quantity: 1
+      }
     }
   },
   async asyncData({params, app}) {
