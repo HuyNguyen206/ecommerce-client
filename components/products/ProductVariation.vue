@@ -7,7 +7,7 @@
       <div class="select is-fullwidth">
         <select :value="selectedVariationId" @change="changed($event,type)">
           <option value="" >--Please choose--</option>
-          <option  v-for="child in childs" :key="child.id" :value="child.id">
+          <option  v-for="child in childs" :key="child.id" :value="child.id" :disabled="!child.in_stock">
             {{child.name}}
             <template v-if="child.price_varies">
               ({{child.price}})
