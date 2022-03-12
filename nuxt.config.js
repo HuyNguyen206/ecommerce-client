@@ -33,7 +33,40 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
+  ],
+  auth:{
+    strategies: {
+      local: {
+        token:{
+          property: 'meta.access_token',
+          global: true,
+          required: true,
+          type: 'Bearer'
+        },
+        user: {
+          property: 'data',
+          autoFetch: true
+        },
+        endpoints:{
+          login:{
+            url:'/auth/login',
+            method: 'post',
+          },
+          logout:{
+            url:'/auth/logout',
+            method: 'post',
+          },
+          user: {
+            url: '/auth/me',
+            method: 'get',
+          }
+        }
+      }
+    }
+  },
   axios: {
    baseURL: 'http://ecommerce-vue-laravel.com/api'
   },
