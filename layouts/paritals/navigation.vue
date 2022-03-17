@@ -5,7 +5,7 @@
         <nuxt-link :to="{name:'index'}" class="navbar-item">
           cart
         </nuxt-link>
-        <div class="navbar-burger burger" data-target="nav">
+        <div class="navbar-burger burger" data-target="#nav">
           <span></span>
           <span></span>
           <span></span>
@@ -43,7 +43,7 @@
           </template>
         <template v-else>
           <a href="" class="navbar-item">Orders</a>
-          <a href="" class="navbar-item">Cart (0)</a>
+          <nuxt-link :to="{name: 'cart'}" class="navbar-item">Cart ({{cartCount}})</nuxt-link>
           <a href="" class="navbar-item">{{$auth.user.name}}</a>
           <a @click.prevent="logout" class="navbar-item" >
             Log out
@@ -62,7 +62,9 @@ export default {
   name: "navigation",
   computed:{
     ...mapGetters({
-      categories: 'categories'
+      categories: 'categories',
+      products: 'cart/products',
+      cartCount: 'cart/cartCount'
     })
   },
   methods:{
