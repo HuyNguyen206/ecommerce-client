@@ -31,7 +31,8 @@ export default {
   components:{CartOverview},
   computed:{
     ...mapGetters({
-      isEmpty: 'cart/isEmpty'
+      isEmpty: 'cart/isEmpty',
+      changed: 'cart/changed'
     })
   }
 }

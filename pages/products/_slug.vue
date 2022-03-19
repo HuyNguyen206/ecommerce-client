@@ -23,7 +23,7 @@
           </span>
           </section>
           <section class="section">
-            <form action="">
+            <form @submit.prevent="addToCart">
               <ProductVariation v-for="(variationTypeChild, variationTypeName) in product.variation"
                                 :key="variationTypeName"
                                 :type="variationTypeName"
@@ -43,7 +43,7 @@
                   </div>
                 </div>
                 <div class="control">
-                  <button class="button is-info">Add to cart</button>
+                  <button class="button is-info" >Add to cart</button>
                 </div>
               </div>
             </form>
@@ -56,9 +56,9 @@
 
 <script>
 import ProductVariation from "../../components/products/ProductVariation";
-
+import {mapActions} from "vuex";
 export default {
-  name: "_slug",
+  name: "slug",
   components: {ProductVariation},
   data() {
     return {
@@ -72,6 +72,23 @@ export default {
   watch: {
     'form.variation'() {
       this.form.quantity = 1
+    }
+  },
+  methods:{
+    ...mapActions({
+    storeCartProduct: 'cart/store'
+    }),
+    addToCart(){
+      this.storeCartProduct([
+        {
+          id: this.form.variation.id,
+          quantity: this.form.quantity
+        }
+      ])
+      this.form = {
+        quantity: 1,
+        variation: null
+      }
     }
   },
   async asyncData({params, app}) {

@@ -4,7 +4,7 @@
     <img src="https://via.placeholder.com/150" alt="">
   </td>
   <td>
-    {{product.product.name}} / {{product.name}}
+    {{product.product.name}} / {{product.type}} {{product.name}}
   </td>
   <td width="160">
     <div class="field">
@@ -15,7 +15,8 @@
           <option :key="stock" value="stock" :value="stock" v-for="stock in product.stock_count">
             {{stock}}
           </option>
-        </select></div>
+        </select>
+        </div>
 
       </div>
     </div>

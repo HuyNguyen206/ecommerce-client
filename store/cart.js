@@ -2,7 +2,8 @@ export const state = () => ({
   products: [],
   isEmpty: true,
   subtotal:null,
-  total:null
+  total:null,
+  changed: false
 })
 
 export const mutations = {
@@ -17,6 +18,9 @@ export const mutations = {
   },
   SET_TOTAL(state, total) {
     state.total = total
+  },
+  SET_CHANGED(state, changed) {
+    state.changed = changed
   }
 }
 
@@ -35,6 +39,9 @@ export const getters = {
   },
   total(state) {
     return state.total
+  },
+  changed(state) {
+    return state.changed
   }
 }
 
@@ -45,6 +52,7 @@ export const actions = {
         commit('SET_IS_EMPTY', response.meta.is_empty)
         commit('SET_SUBTOTAL', response.meta.subtotal)
     commit('SET_TOTAL', response.meta.total)
+    commit('SET_CHANGED', response.meta.changed)
   },
   async destroy({dispatch}, productId) {
     let response = await this.$axios.$delete(`carts/${productId}`)
@@ -53,6 +61,11 @@ export const actions = {
   async update({dispatch}, {productId, quantity}) {
     console.log('test '. quantity)
     let response = await this.$axios.$patch(`carts/${productId}`, {quantity})
+        await dispatch('getCart')
+  },
+  async store({dispatch}, products) {
+    console.log('test '. quantity)
+    let response = await this.$axios.$post(`carts`, {products})
         await dispatch('getCart')
   }
 }
