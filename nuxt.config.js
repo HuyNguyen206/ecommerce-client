@@ -39,18 +39,10 @@ export default {
   ],
   auth:{
     strategies: {
-      local: {
-        token:{
-          property: 'meta.access_token',
-          global: true,
-          required: true,
-          type: 'Bearer'
-        },
-        user: {
-          property: 'data',
-          autoFetch: true
-        },
-        endpoints:{
+      'laravelJWT': {
+        provider: 'laravel/jwt',
+        url: 'http://ecommerce-vue-laravel.com/api',
+        endpoints: {
           login:{
             url:'/auth/login',
             method: 'post',
@@ -62,10 +54,49 @@ export default {
           user: {
             url: '/auth/me',
             method: 'get',
+          },
+          refresh: {
+            url: '/auth/refresh',
+            method: 'get',
           }
-        }
-      }
+        },
+        token: {
+          property: 'meta.access_token',
+          maxAge: 60 * 60
+        },
+        refreshToken: {
+          maxAge: 20160 * 60
+        },
+      },
     }
+    // strategies: {
+    //   local: {
+    //     token:{
+    //       property: 'meta.access_token',
+    //       global: true,
+    //       required: true,
+    //       type: 'Bearer'
+    //     },
+    //     user: {
+    //       property: 'data',
+    //       autoFetch: true
+    //     },
+    //     endpoints:{
+    //       login:{
+    //         url:'/auth/login',
+    //         method: 'post',
+    //       },
+    //       logout:{
+    //         url:'/auth/logout',
+    //         method: 'post',
+    //       },
+    //       user: {
+    //         url: '/auth/me',
+    //         method: 'get',
+    //       }
+    //     }
+    //   }
+    // }
   },
   axios: {
    baseURL: 'http://ecommerce-vue-laravel.com/api'

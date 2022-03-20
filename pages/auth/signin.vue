@@ -48,7 +48,7 @@ export default {
     async submit() {
       try {
         // const data = await this.$axios.post('/auth/login', this.form)
-        await this.$auth.loginWith('local', {
+        await this.$auth.loginWith('laravelJWT', {
           data: this.form
         })
         console.log(data)

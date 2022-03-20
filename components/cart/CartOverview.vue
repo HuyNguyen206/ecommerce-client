@@ -13,6 +13,7 @@
   <td>{{subtotal}}</td>
   <td></td>
 </tr>
+<slot name="rows"></slot>
 </tbody>
 </table>
 </template>

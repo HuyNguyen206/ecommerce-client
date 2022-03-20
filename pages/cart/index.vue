@@ -9,13 +9,13 @@
             <CartOverview></CartOverview>
           </article>
 
-          <button
-            href="#"
+          <nuxt-link
+            :to="{name: 'checkout'}"
             class="button is-fullwidth is-info is-medium"
             :disabled="isEmpty"
           >
             Checkout
-          </button>
+          </nuxt-link>
         </div>
       </div>
     </div>
