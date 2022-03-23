@@ -38,6 +38,7 @@ export default {
     '@nuxtjs/auth-next'
   ],
   auth:{
+
     strategies: {
       'laravelJWT': {
         provider: 'laravel/jwt',
@@ -65,6 +66,7 @@ export default {
           maxAge: 60 * 60
         },
         refreshToken: {
+          property: 'meta.access_token',
           maxAge: 20160 * 60
         },
       },
@@ -99,8 +101,15 @@ export default {
     // }
   },
   axios: {
-   baseURL: 'http://ecommerce-vue-laravel.com/api'
+   baseURL: 'http://ecommerce-vue-laravel.com/api',
+    // proxy: true
   },
+  // proxy: {
+  //   '/laravel': {
+  //     target: 'http://ecommerce-vue-laravel.com/api',
+  //     pathRewrite: { '^/laravel': '/' }
+  //   }
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

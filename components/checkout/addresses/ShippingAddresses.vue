@@ -6,6 +6,10 @@
         <ShippingAddressSelector :selectedAddressId="selectedAddress.id" @changeAddress="switchAddress"
                                  :addresses="localAddresses"></ShippingAddressSelector>
       </template>
+      <template v-else-if="creating">
+           <ShippingAddressCreator @createdAddress="addAddress" @cancel="creating = false"></ShippingAddressCreator>
+
+      </template>
       <template v-else>
         <template>
           <p>
@@ -17,10 +21,15 @@
           </p>
           <br>
         </template>
-        <div class="vield is-grouped">
+        <div class="field is-grouped">
           <p class="control">
             <a href="" class="button is-info" @click.prevent="selecting = true">
               Change shipping address
+            </a>
+          </p>
+          <p class="control">
+            <a href="" class="button is-info" @click.prevent="creating = true">
+              Add an address
             </a>
           </p>
         </div>
@@ -30,16 +39,18 @@
 </template>
 
 <script>
+import ShippingAddressCreator from "./ShippingAddressCreator";
 import ShippingAddressSelector from "./ShippingAddressSelector";
 
 export default {
   name: "ShippingAddresses",
-  components: {ShippingAddressSelector},
+  components: {ShippingAddressSelector, ShippingAddressCreator},
   data() {
     return {
       selecting: false,
       localAddresses: this.addresses,
-      selectedAddress: null
+      selectedAddress: null,
+      creating: false
     }
   },
   props: ['addresses'],
@@ -54,6 +65,11 @@ export default {
     switchAddress(address) {
       this.selectedAddress = address
 
+    },
+    addAddress(address){
+      this.localAddresses.push(address)
+      this.creating = false
+      this.switchAddress(address)
     }
   },
   created() {

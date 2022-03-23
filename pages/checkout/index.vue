@@ -3,7 +3,7 @@
     <div class="container is-fluid">
       <div class="columns">
         <div class="column is-three-quarters">
-          <ShippingAddresses :addresses="addresses"></ShippingAddresses>
+          <ShippingAddresses v-if="addresses.length" :addresses="addresses"></ShippingAddresses>
           <article class="message">
             <div class="message-body">
               <h1 class="title is-5">Payment</h1>
@@ -84,11 +84,17 @@ import {mapGetters} from "vuex";
 import CartOverview from "../../components/cart/CartOverview";
 import ShippingAddresses from "../../components/checkout/addresses/ShippingAddresses";
 export default {
+  middleware: 'auth',
   name: "index",
   data(){
     return {
     addresses: []
     }
+  },
+  async created() {
+    let data = await this.$axios.$get('addresses')
+    console.log(data)
+    this.addresses = data.data
   },
   components:{
     CartOverview,
@@ -101,10 +107,9 @@ export default {
       empty:'cart/isEmpty'
     })
   },
- async asyncData({app}) {
-    let data = await app.$axios.$get('addresses')
-   return {addresses: data.data}
- }
+ // async asyncData({app}) {
+ //
+ // }
 }
 </script>
 
