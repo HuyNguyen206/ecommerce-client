@@ -36,6 +36,7 @@
           <div class="control">
             <div class="select is-fullwidth">
               <select v-model="form.country_id">
+                <option value="">Please select</option>
                 <option v-for="country in countries" :key="country.id" :value="country.id">{{country.name}} ({{country.code}})</option>
               </select>
             </div>

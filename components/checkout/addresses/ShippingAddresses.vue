@@ -78,8 +78,9 @@ export default {
     }
   },
   watch: {
-    selectedAddress() {
+    selectedAddress(address) {
       this.selecting = false
+      this.$emit('input', address.id)
     }
   }
 }
