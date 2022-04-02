@@ -1,10 +1,12 @@
 <template>
-<p>Orders</p>
+  <div class="tag is-primary">
+    Processing
+  </div>
 </template>
 
 <script>
 export default {
-  name: "index"
+  name: "OrderStatusProcesssing"
 }
 </script>
 

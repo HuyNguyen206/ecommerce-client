@@ -4,6 +4,8 @@
       <div class="columns">
         <div class="column is-three-quarters">
           <ShippingAddresses v-model="form.address_id" v-if="addresses.length" :addresses="addresses"></ShippingAddresses>
+          <PaymentMethods v-model="form.payment_method_id" v-if="addresses.length" :paymentMethods="paymentMethods"></PaymentMethods>
+
           <article class="message">
             <div class="message-body">
               <h1 class="title is-5">Payment</h1>
@@ -84,7 +86,7 @@
 import {mapGetters, mapActions} from "vuex";
 import CartOverview from "../../components/cart/CartOverview";
 import ShippingAddresses from "../../components/checkout/addresses/ShippingAddresses";
-
+import PaymentMethods from "../../components/checkout/paymentMethods/PaymentMethods";
 export default {
   middleware: 'auth',
   name: "index",
@@ -92,20 +94,27 @@ export default {
     return {
       submitting:false,
       addresses: [],
+      paymentMethods: [],
       form: {
         address_id: null,
+        payment_method_id:null
       },
       shippingMethods: []
     }
   },
-  async created() {
-    let data = await this.$axios.$get('addresses')
-    console.log(data)
-    this.addresses = data.data
+  async asyncData({app}) {
+    let addresses = await app.$axios.$get('addresses')
+    let paymentMethods = await app.$axios.$get('payment-methods')
+    return {
+      addresses: addresses.data,
+      paymentMethods: paymentMethods.data
+    }
+
   },
   components: {
     CartOverview,
-    ShippingAddresses
+    ShippingAddresses,
+    PaymentMethods
   },
   computed: {
     ...mapGetters({
@@ -138,7 +147,8 @@ export default {
   methods:{
     ...mapActions({
       setShipping: 'cart/setShipping',
-      getCart: 'cart/getCart'
+      getCart: 'cart/getCart',
+      flash: 'alert/flash'
     }),
     async fetchShippingByAddressId(addressId) {
      const res = await this.$axios.$get(`addresses/${addressId}/shippings`)
@@ -147,24 +157,28 @@ export default {
     },
     async order(){
       try {
+        console.log({
+          ...this.form,
+          shipping_method_id: this.shippingMethodId
+        })
         const res = await this.$axios.$post('orders', {
-          address_id: this.form.address_id,
+          ...this.form,
           shipping_method_id: this.shippingMethodId
         })
        await this.getCart()
         this.submitting = true
         this.$router.replace({
-          name: 'order'
+          name: 'orders'
         })
       }catch (e) {
+        this.flash(e.response.data.message)
+        this.getCart()
+        console.log(e.response)
         this.submitting = false
       }
 
     }
   }
-  // async asyncData({app}) {
-  //
-  // }
 }
 </script>
 

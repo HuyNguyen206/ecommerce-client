@@ -33,17 +33,17 @@
 <script>
 import {mapActions} from 'vuex'
 export default {
-  data(){
-    return {
-      quantity:this.product.quantity
-    }
-  },
   props:[
     'product'
   ],
-  watch:{
-    'quantity' (count) {
-      this.updateCart({productId:this.product.id, quantity:count})
+  computed:{
+    quantity:{
+      get(){
+        return this.product.quantity
+      },
+      set(quantity){
+        this.updateCart({productId:this.product.id, quantity})
+      }
     }
   },
   name: "CartOverviewProduct",
