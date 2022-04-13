@@ -88,7 +88,9 @@ import CartOverview from "../../components/cart/CartOverview";
 import ShippingAddresses from "../../components/checkout/addresses/ShippingAddresses";
 import PaymentMethods from "../../components/checkout/paymentMethods/PaymentMethods";
 export default {
-  middleware: 'auth',
+  middleware: [
+    'redirectIfGuest'
+  ],
   name: "index",
   data() {
     return {

@@ -27,7 +27,9 @@
 <script>
 import Order from "../../components/order/order";
 export default {
-  middleware: 'auth',
+  middleware: [
+    'redirectIfGuest'
+  ],
   data(){
     return {
       orders: []

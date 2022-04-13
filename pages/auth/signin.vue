@@ -36,6 +36,9 @@
 <script>
 export default {
   name: "signin",
+  middleware:[
+    'redirectIfAuthenticated'
+  ],
   data() {
     return {
       form: {
